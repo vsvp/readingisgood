@@ -1,12 +1,8 @@
 package com.example.readingisgood.service;
 
-import com.example.readingisgood.entity.Customer;
-import com.example.readingisgood.entity.Order;
 import com.example.readingisgood.model.Statistics;
-import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Query;
 import java.math.BigInteger;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -15,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class StatisticsServiceImpl extends BaseService implements StatisticsService{
+public class StatisticsServiceImpl extends BaseService implements StatisticsService {
 
 
     private static final String query = "SELECT\n" +
@@ -58,15 +54,15 @@ public class StatisticsServiceImpl extends BaseService implements StatisticsServ
         return statisticsList;
     }
 
-    private String getMonth(Date date){
+    private String getMonth(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
 
-        int monthNumber  = calendar.get(Calendar.MONTH);
+        int monthNumber = calendar.get(Calendar.MONTH);
         String month = "wrong";
         DateFormatSymbols dfs = new DateFormatSymbols();
         String[] months = dfs.getMonths();
-        if (monthNumber >= 0 && monthNumber <= 11 ) {
+        if (monthNumber >= 0 && monthNumber <= 11) {
             month = months[monthNumber];
         }
         return month;

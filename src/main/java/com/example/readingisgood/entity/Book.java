@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Book")
+@Table(name = "Book")
 public class Book {
 
     @Id
@@ -76,7 +76,7 @@ public class Book {
         this.price = price;
     }
 
-    public void decreaseStockNumber(int substract){
+    public void decreaseStockNumber(int substract) {
         this.stock -= substract;
     }
 }

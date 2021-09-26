@@ -1,8 +1,5 @@
 package com.example.readingisgood.model;
 
-import java.util.Date;
-
-
 public class Statistics {
 
     private String month;

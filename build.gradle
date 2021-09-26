@@ -22,13 +22,20 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'javax.persistence:javax.persistence-api:2.2'
+	implementation 'junit:junit:4.12'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.2'
 	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.2.RELEASE'
 	implementation 'io.jsonwebtoken:jjwt:0.6.0'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb:2.5.5'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation group: 'junit', name: 'junit', version: '4.4'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+	testImplementation('org.mockito:mockito-junit-jupiter:2.23.0')
+	testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.8.4'
 }
 
 test {

@@ -1,13 +1,11 @@
 package com.example.readingisgood.controller;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.example.readingisgood.model.Response;
 import com.example.readingisgood.model.Token;
 import com.example.readingisgood.util.ReadingUtil;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+;
 
 @RestController
 public class UserController {

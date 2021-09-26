@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
             return response;
         }
 
-        if (orderRequest.getBookOrderSize()<1) {
+        if (orderRequest.getBookOrderSize() < 1) {
             logger.warn("[createOrder()] Can not order 0 or negative number amount of book");
             response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
             response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_NEGATIVE_INTEGER_ALLOWED));
@@ -61,8 +61,8 @@ public class OrderServiceImpl implements OrderService {
 
             Customer customer = customerRepository.findById(orderRequest.getCustomerId());
 
-            if(Objects.isNull(customer)){
-                logger.warn("[createOrder()] no matching customer found with id= {}",orderRequest.getCustomerId());
+            if (Objects.isNull(customer)) {
+                logger.warn("[createOrder()] no matching customer found with id= {}", orderRequest.getCustomerId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;
@@ -70,14 +70,14 @@ public class OrderServiceImpl implements OrderService {
 
             Book bookToBeOrdered = bookRepository.findById(orderRequest.getBookId());
 
-            if(Objects.isNull(bookToBeOrdered)){
-                logger.warn("[createOrder()] no matching book found with id={}",orderRequest.getBookId());
+            if (Objects.isNull(bookToBeOrdered)) {
+                logger.warn("[createOrder()] no matching book found with id={}", orderRequest.getBookId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;
             }
 
-            if(bookToBeOrdered.getStock() == 0) {
+            if (bookToBeOrdered.getStock() == 0) {
                 logger.warn("[createOrder()] no stock left for book with id = {} ", orderRequest.getBookId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_STOCK_LEFT));
@@ -89,12 +89,12 @@ public class OrderServiceImpl implements OrderService {
             newOrder.setBookId(bookToBeOrdered.getId());
             newOrder.setCustomerId(orderRequest.getCustomerId());
             newOrder.setStartDate(Calendar.getInstance().getTime());
-            newOrder.setCost(bookToBeOrdered.getPrice()* orderRequest.getBookOrderSize());
+            newOrder.setCost(bookToBeOrdered.getPrice() * orderRequest.getBookOrderSize());
             newOrder.setBookCount(orderRequest.getBookOrderSize());
 
             Order order = orderRepository.save(newOrder);
 
-            if(Objects.isNull(order)){
+            if (Objects.isNull(order)) {
                 logger.error("[createOrder()] operation failed");
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
@@ -106,7 +106,7 @@ public class OrderServiceImpl implements OrderService {
             bookRepository.save(bookToBeOrdered);
 
         } catch (Exception e) {
-            logger.error("[createOrder()] Exception occured while operation. Exception = {} ",e);
+            logger.error("[createOrder()] Exception occured while operation. Exception = {} ", e);
             response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
             response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
             return response;
@@ -136,15 +136,15 @@ public class OrderServiceImpl implements OrderService {
 
             order = orderRepository.findById(id);
 
-            if(Objects.isNull(order)){
-                logger.warn("[getOrderById()] no matching order found with id ={}",id);
+            if (Objects.isNull(order)) {
+                logger.warn("[getOrderById()] no matching order found with id ={}", id);
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;
             }
 
         } catch (Exception e) {
-            logger.error("[createOrder()] Exception occured while operation. Exception = {} ",e);
+            logger.error("[createOrder()] Exception occured while operation. Exception = {} ", e);
             response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
             response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
             return response;

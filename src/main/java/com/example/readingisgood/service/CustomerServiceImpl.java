@@ -1,11 +1,8 @@
 package com.example.readingisgood.service;
 
-import com.example.readingisgood.controller.CustomerController;
-import com.example.readingisgood.entity.Book;
 import com.example.readingisgood.entity.Customer;
 import com.example.readingisgood.entity.Order;
 import com.example.readingisgood.model.Response;
-import com.example.readingisgood.model.Result;
 import com.example.readingisgood.repository.CustomerRepository;
 import com.example.readingisgood.repository.OrderRepository;
 import com.example.readingisgood.util.ReadingUtil;
@@ -105,8 +102,6 @@ public class CustomerServiceImpl implements CustomerService {
             if (pagedResult.hasContent()) {
                 orderList = pagedResult.getContent();
             }
-
-//            orderList = orderRepository.findOrdersByCustomerMail(mail, pageNo, pageSize, sortBy);
 
             if (orderList == null || orderList.isEmpty()) {
                 logger.warn("[listAllOrdersByCustomerId()] no order found for customer. Customer mail");

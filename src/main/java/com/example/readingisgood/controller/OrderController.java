@@ -1,21 +1,15 @@
 package com.example.readingisgood.controller;
 
 
-import com.example.readingisgood.entity.Customer;
 import com.example.readingisgood.entity.Order;
 import com.example.readingisgood.model.OrderRequest;
 import com.example.readingisgood.model.Response;
-import com.example.readingisgood.model.Result;
 import com.example.readingisgood.service.OrderService;
-import com.example.readingisgood.util.ReadingUtil;
-import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/order")

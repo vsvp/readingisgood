@@ -28,11 +28,11 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/listOrders/{customerId}", method = RequestMethod.GET)
-    public ResponseEntity<Response<List<Order>>> getAllOrdersOfCustomer(@PathVariable(value ="customerId" , required = true) String customerId,
-                                                        @RequestParam(defaultValue = "0") Integer pageNo,
-                                                        @RequestParam(defaultValue = "10") Integer pageSize,
-                                                        @RequestParam(defaultValue = "startDate") String sortBy) {
+    public ResponseEntity<Response<List<Order>>> getAllOrdersOfCustomer(@PathVariable(value = "customerId", required = true) String customerId,
+                                                                        @RequestParam(defaultValue = "0") Integer pageNo,
+                                                                        @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                        @RequestParam(defaultValue = "startDate") String sortBy) {
 
-        return customerService.listAllOrdersByCustomerId(customerId,pageNo, pageSize, sortBy);
+        return customerService.listAllOrdersByCustomerId(customerId, pageNo, pageSize, sortBy);
     }
 }
