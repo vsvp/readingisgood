@@ -15,6 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     @Query("SELECT o FROM Order o WHERE o.id=:id")
     Order findById(@Param("id") String id);
 
-    @Query("SELECT o FROM Order o WHERE o.customerMail=:customerMail")
-    Page<Order> findOrdersByCustomerMail(@Param("customerMail") String customerMail, Pageable paging);
+    @Query("SELECT o FROM Order o WHERE o.customerId=:customerId")
+    Page<Order> findOrdersByCustomerId(@Param("customerId") String customerMail, Pageable paging);
 }

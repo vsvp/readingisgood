@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
 
         try {
 
-            bookRef = bookRepository.findByNameAndAuthor(book.getName(), book.getAuthor());
+            bookRef = bookRepository.findByNameAndAuthor(book.getName(), book.getAuthor(), book.getYear());
 
             if (Objects.nonNull(bookRef)) {
                 logger.warn("[createBook()] this entity has already registered");
@@ -70,9 +70,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book findByNameAndAuthor(String bookName, String authorName) {
+    public Book findByNameAndAuthor(String bookName, String authorName, int year) {
 
-        return bookRepository.findByNameAndAuthor(bookName, authorName);
+        return bookRepository.findByNameAndAuthor(bookName, authorName, year);
     }
 
     @Override
@@ -84,10 +84,10 @@ public class BookServiceImpl implements BookService {
         Book book;
 
         try {
-            book = bookRepository.findByNameAndAuthor(bookStockUpdateRequest.getBookName(), bookStockUpdateRequest.getAuthor());
+            book = bookRepository.findById(bookStockUpdateRequest.getBookId());
 
             if (Objects.isNull(book)) {
-                logger.warn("[updatePage()] no matching book found with name={} and author={}", bookStockUpdateRequest.getBookName(), bookStockUpdateRequest.getAuthor());
+                logger.warn("[updatePage()] no matching book found with id", bookStockUpdateRequest.getBookId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;

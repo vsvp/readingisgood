@@ -1,18 +1,15 @@
 package com.example.readingisgood.service;
 
-import com.example.readingisgood.controller.OrderController;
 import com.example.readingisgood.entity.Book;
 import com.example.readingisgood.entity.Customer;
 import com.example.readingisgood.entity.Order;
 import com.example.readingisgood.model.OrderRequest;
 import com.example.readingisgood.model.Response;
-import com.example.readingisgood.model.Result;
 import com.example.readingisgood.repository.BookRepository;
 import com.example.readingisgood.repository.CustomerRepository;
 import com.example.readingisgood.repository.OrderRepository;
 import com.example.readingisgood.util.ReadingUtil;
 import org.apache.logging.log4j.util.Strings;
-import org.aspectj.weaver.ast.Or;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +43,17 @@ public class OrderServiceImpl implements OrderService {
         Response<Order> resp = new Response<>();
         ResponseEntity<Response<Order>> response;
 
-        if (Objects.isNull(orderRequest) || Strings.isEmpty(orderRequest.getCustomerId()) || Strings.isEmpty(orderRequest.getBookName())
-                || Strings.isEmpty(orderRequest.getBookAuthor())) {
+        if (Objects.isNull(orderRequest) || Strings.isEmpty(orderRequest.getCustomerId()) || Strings.isEmpty(orderRequest.getBookId())) {
             logger.warn("[createOrder()] request failed. Fields can not be empty");
             response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
             response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
+            return response;
+        }
+
+        if (orderRequest.getBookOrderSize()<1) {
+            logger.warn("[createOrder()] Can not order 0 or negative number amount of book");
+            response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
+            response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_NEGATIVE_INTEGER_ALLOWED));
             return response;
         }
 
@@ -65,17 +68,17 @@ public class OrderServiceImpl implements OrderService {
                 return response;
             }
 
-            Book bookToBeOrdered = bookRepository.findByNameAndAuthor(orderRequest.getBookName(), orderRequest.getBookAuthor());
+            Book bookToBeOrdered = bookRepository.findById(orderRequest.getBookId());
 
             if(Objects.isNull(bookToBeOrdered)){
-                logger.warn("[createOrder()] no matching book found with name={} and author={}",orderRequest.getBookName(), orderRequest.getBookAuthor());
+                logger.warn("[createOrder()] no matching book found with id={}",orderRequest.getBookId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;
             }
 
             if(bookToBeOrdered.getStock() == 0) {
-                logger.warn("[createOrder()] no stock left for book = {} ", orderRequest.getBookName());
+                logger.warn("[createOrder()] no stock left for book with id = {} ", orderRequest.getBookId());
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_STOCK_LEFT));
                 return response;
@@ -86,6 +89,8 @@ public class OrderServiceImpl implements OrderService {
             newOrder.setBookId(bookToBeOrdered.getId());
             newOrder.setCustomerId(orderRequest.getCustomerId());
             newOrder.setStartDate(Calendar.getInstance().getTime());
+            newOrder.setCost(bookToBeOrdered.getPrice()* orderRequest.getBookOrderSize());
+            newOrder.setBookCount(orderRequest.getBookOrderSize());
 
             Order order = orderRepository.save(newOrder);
 
@@ -96,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
                 return response;
             }
 
-            bookToBeOrdered.increaseStockNumber();
+            bookToBeOrdered.decreaseStockNumber(orderRequest.getBookOrderSize());
 
             bookRepository.save(bookToBeOrdered);
 

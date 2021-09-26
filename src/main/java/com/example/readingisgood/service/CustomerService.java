@@ -13,6 +13,6 @@ public interface CustomerService {
 
     Customer findByEmail(String email);
 
-    ResponseEntity<Response<List<Order>>> listAllOrdersByCustomerMail(String mail, Integer pageNo, Integer pageSize, String sortBy);
+    ResponseEntity<Response<List<Order>>> listAllOrdersByCustomerId(String customerId, Integer pageNo, Integer pageSize, String sortBy);
 
 }

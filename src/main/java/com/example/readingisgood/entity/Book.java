@@ -19,6 +19,9 @@ public class Book {
     @Column(name = "author")
     private String author;
 
+    @Column(name = "year")
+    private int year;
+
     @Column(name = "stock")
     private int stock;
 
@@ -57,8 +60,12 @@ public class Book {
         this.stock = stock;
     }
 
-    public void increaseStockNumber(){
-        this.stock--;
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public int getPrice() {
@@ -67,5 +74,9 @@ public class Book {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void decreaseStockNumber(int substract){
+        this.stock -= substract;
     }
 }

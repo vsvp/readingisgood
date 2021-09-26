@@ -84,7 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public ResponseEntity<Response<List<Order>>> listAllOrdersByCustomerMail(String mail, Integer pageNo, Integer pageSize, String sortBy) {
+    public ResponseEntity<Response<List<Order>>> listAllOrdersByCustomerId(String customerId, Integer pageNo, Integer pageSize, String sortBy) {
 
         Response<List<Order>> resp = new Response<>();
         ResponseEntity<Response<List<Order>>> response;
@@ -92,15 +92,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         try {
 
-            if (Strings.isEmpty(mail)) {
-                logger.warn("[listAllOrdersByCustomerMail()] field 'mail' can not be null");
+            if (Strings.isEmpty(customerId)) {
+                logger.warn("[listAllOrdersByCustomerId()] field 'mail' can not be null");
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
                 return response;
             }
 
             Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-            Page<Order> pagedResult = orderRepository.findOrdersByCustomerMail(mail, paging);
+            Page<Order> pagedResult = orderRepository.findOrdersByCustomerId(customerId, paging);
 
             if (pagedResult.hasContent()) {
                 orderList = pagedResult.getContent();
@@ -109,14 +109,14 @@ public class CustomerServiceImpl implements CustomerService {
 //            orderList = orderRepository.findOrdersByCustomerMail(mail, pageNo, pageSize, sortBy);
 
             if (orderList == null || orderList.isEmpty()) {
-                logger.warn("[listAllOrdersByCustomerMail()] no order found for customer. Customer mail");
+                logger.warn("[listAllOrdersByCustomerId()] no order found for customer. Customer mail");
                 response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
                 response.getBody().setResult(ReadingUtil.buildResult(false, ReadingUtil.ERROR_CODE_FAIL_NO_MATCH));
                 return response;
             }
 
         } catch (Exception e) {
-            logger.warn("[listAllOrdersByCustomerMail()] Exception occured while operation. Exception = {} ", e);
+            logger.warn("[listAllOrdersByCustomerId()] Exception occured while operation. Exception = {} ", e);
             response = new ResponseEntity<>(resp, HttpStatus.BAD_REQUEST);
             response.getBody().setResult(ReadingUtil.buildGeneralFailResult());
             return response;

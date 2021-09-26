@@ -32,7 +32,7 @@ public class OrderController {
         return orderService.createOrder(orderRequest);
     }
 
-    @RequestMapping(value = "/createOrder/{id]", method = RequestMethod.GET)
+    @RequestMapping(value = "/getOrder/{id]", method = RequestMethod.GET)
     public ResponseEntity<Response<Order>> getOrderById(@PathVariable(value = "id", required = true) String id) {
         return orderService.getOrderById(id);
     }

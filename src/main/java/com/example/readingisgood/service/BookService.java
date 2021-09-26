@@ -9,7 +9,7 @@ public interface BookService {
 
     ResponseEntity<Response<Book>> createBook(Book book);
 
-    Book findByNameAndAuthor(String bookName, String authorName);
+    Book findByNameAndAuthor(String bookName, String authorName, int year);
 
     ResponseEntity<Response<Book>> updateStock(BookStockUpdateRequest bookStockUpdateRequest);
 

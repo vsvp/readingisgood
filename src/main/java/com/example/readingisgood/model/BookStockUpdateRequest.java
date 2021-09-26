@@ -2,26 +2,16 @@ package com.example.readingisgood.model;
 
 public class BookStockUpdateRequest {
 
-    private String bookName;
-
-    private String author;
+    private String bookId;
 
     private int stock;
 
-    public String getBookName() {
-        return bookName;
+    public String getBookId() {
+        return bookId;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public int getStock() {

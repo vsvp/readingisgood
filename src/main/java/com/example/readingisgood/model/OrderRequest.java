@@ -4,9 +4,9 @@ public class OrderRequest {
 
     private String customerId;
 
-    private String bookName;
+    private String bookId;
 
-    private String bookAuthor;
+    private int bookOrderSize;
 
     public String getCustomerId() {
         return customerId;
@@ -16,19 +16,19 @@ public class OrderRequest {
         this.customerId = customerId;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getBookId() {
+        return bookId;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
-    public String getBookAuthor() {
-        return bookAuthor;
+    public int getBookOrderSize() {
+        return bookOrderSize;
     }
 
-    public void setBookAuthor(String bookAuthor) {
-        this.bookAuthor = bookAuthor;
+    public void setBookOrderSize(int bookOrderSize) {
+        this.bookOrderSize = bookOrderSize;
     }
 }
